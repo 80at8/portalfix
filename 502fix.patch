@@ -1,0 +1,30 @@
+diff -ruN deploy/90_init_fpm.sh deployfixed/90_init_fpm.sh
+--- deploy/90_init_fpm.sh	2019-12-20 21:59:10.910643435 +0000
++++ deployfixed/90_init_fpm.sh	2020-09-29 19:31:00.530162035 +0000
+@@ -2,5 +2,5 @@
+ set -euf -o pipefail
+ 
+ mkdir -p /run/php
+-touch /run/php/php7.3-fpm.sock
+-chown www-data:www-data /run/php/php7.3-fpm.sock
++touch /run/php/php7.4-fpm.sock
++chown www-data:www-data /run/php/php7.4-fpm.sock
+diff -ruN deploy/conf/nginx/sonar-customerportal.template deployfixed/conf/nginx/sonar-customerportal.template
+--- deploy/conf/nginx/sonar-customerportal.template	2019-12-20 21:59:10.910643435 +0000
++++ deployfixed/conf/nginx/sonar-customerportal.template	2020-09-29 19:30:40.045834160 +0000
+@@ -35,7 +35,7 @@
+     }
+ 
+     location ~ ^/.+\.php(/|$) {
+-        fastcgi_pass unix:/run/php/php7.3-fpm.sock;
++        fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+         include fastcgi_params;
+         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+     }
+diff -ruN deploy/services/php-fpm.sh deployfixed/services/php-fpm.sh
+--- deploy/services/php-fpm.sh	2019-12-20 21:59:10.910643435 +0000
++++ deployfixed/services/php-fpm.sh	2020-09-29 19:31:15.790406303 +0000
+@@ -1,2 +1,2 @@
+ #!/bin/sh
+-exec /usr/sbin/php-fpm7.3 -F
++exec /usr/sbin/php-fpm7.4 -F
